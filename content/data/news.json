@@ -1,0 +1,30 @@
+{
+  "about": "The news from investor circles, angel to Series A, as a ledger and a graph. Public sources only, every item dated and linked, and no private person named.",
+  "status": "empty",
+  "items": [],
+  "item_fields": {
+    "id"          : "a stable slug, date first",
+    "date"        : "the date of the event, not of the fetch",
+    "summary"     : "one sentence, in our words",
+    "source_name" : "the publication or register",
+    "source_url"  : "the public page the item is read from",
+    "fetched"     : "when the source was read, UTC",
+    "sha256"      : "hash of the frozen copy of the source",
+    "edges"       : "the graph edges this item adds"
+  },
+  "node_types": [
+    { "type": "company",   "about": "A startup that raised, or a company that bought one. Registered name and country." },
+    { "type": "investor",  "about": "A fund, an angel network or a corporate investor. Organisations only; private individuals are not named." },
+    { "type": "round",     "about": "One raise: stage, amount if public, date, lead." },
+    { "type": "term",      "about": "A contract term seen in public reporting, such as a preference, a pool size or a structure." },
+    { "type": "source",    "about": "The public page an item came from, frozen and hashed." }
+  ],
+  "edge_types": [
+    { "type": "raised",        "from": "company",  "to": "round",   "about": "The company raised this round." },
+    { "type": "led",           "from": "investor", "to": "round",   "about": "The investor led the round." },
+    { "type": "joined",        "from": "investor", "to": "round",   "about": "The investor took part without leading." },
+    { "type": "co-invested",   "from": "investor", "to": "investor","about": "Derived: the two appear in the same round. Counted, never typed." },
+    { "type": "used-term",     "from": "round",    "to": "term",    "about": "Public reporting says the round used this term." },
+    { "type": "reported-by",   "from": "round",    "to": "source",  "about": "Where the item was read." }
+  ]
+}

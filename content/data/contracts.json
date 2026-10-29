@@ -1,0 +1,187 @@
+{
+  "about": "One fictional Series A, as the documents that carry it: a term sheet in two versions, the subscription and shareholders' agreement, the articles of association, the option scheme rules and the cap table they produce. Every clause is a node; every link between clauses is an edge. The company, the people and the numbers are invented. UK practice, simplified.",
+  "company": {
+    "name"         : "Example Robotics Ltd",
+    "jurisdiction" : "England and Wales",
+    "website"      : "example.com"
+  },
+  "caveats": [
+    "Fictional. Example Robotics Ltd, its founders and its investors do not exist, and the numbers are chosen to make the arithmetic easy to follow.",
+    "Not legal advice. The clauses are short summaries of what such clauses usually do, written for this example, not drafting to copy. Real documents are longer and the detail matters.",
+    "UK practice, simplified. Clause names and structure follow common English practice for venture rounds; other jurisdictions put the same rights in different documents.",
+    "The cap table assumes every option in the pool is granted and exercised, ignores exercise prices and tax, and treats seed shares as ordinary shares."
+  ],
+  "cap_table": {
+    "holders": [
+      { "id": "founder-a", "name": "Founder A",   "class": "Ordinary", "shares": 5000000 },
+      { "id": "founder-b", "name": "Founder B",   "class": "Ordinary", "shares": 4000000 },
+      { "id": "seed",      "name": "Seed angels", "class": "Ordinary", "shares": 1000000 }
+    ],
+    "existing_pool" : 0,
+    "exit_values"   : [2000000, 5000000, 15000000, 40000000, 100000000]
+  },
+  "versions": [
+    { "id": "v1", "date": "2026-09-01", "note": "First draft, sent by the lead investor." },
+    { "id": "v2", "date": "2026-09-15", "note": "Agreed draft, after the founders' reply." }
+  ],
+  "rounds": {
+    "v1": { "investment": 3000000, "pre_money": 12000000, "pool_pct": 0.10, "pool_in_pre_money": true, "preference_multiple": 1, "participating": true  },
+    "v2": { "investment": 3000000, "pre_money": 12000000, "pool_pct": 0.08, "pool_in_pre_money": true, "preference_multiple": 1, "participating": false }
+  },
+  "documents": [
+    {
+      "id"      : "term-sheet",
+      "title"   : "Series A term sheet",
+      "summary" : "The short document both sides negotiate first. Almost all of it is not binding; it is the map the long-form documents are drafted from.",
+      "versioned": true,
+      "clauses": [
+        { "id": "ts-investment", "title": "Investment and valuation",
+          "text": "The investors subscribe £3,000,000 for Series A preferred shares at a pre-money valuation of £12,000,000, on a fully diluted basis that includes the new option pool.",
+          "caveat": "\"Fully diluted\" and \"pre-money\" together mean the new option pool is paid for by the existing shareholders, not the new investor. Read it with the option pool clause.",
+          "links": [ { "to": "sha-subscription", "rel": "becomes" }, { "to": "cap-round", "rel": "computed in" } ],
+          "argued_in": ["a-small-slice-sets-the-price", "sell-dont-issue"] },
+        { "id": "ts-pool", "title": "Option pool",
+          "text": { "v1": "Before completion the company creates an unallocated option pool equal to 10% of the fully diluted share capital after completion, counted in the pre-money valuation.",
+                    "v2": "Before completion the company creates an unallocated option pool equal to 8% of the fully diluted share capital after completion, counted in the pre-money valuation." },
+          "change": "The founders showed a two-year hiring plan that uses 8%. The pool was cut to what the plan needs, which moves part of the company back to the existing shareholders; the cap table computes how much.",
+          "caveat": "The size of the pool is a valuation term in disguise: every point of pool in the pre-money valuation lowers the price per share.",
+          "links": [ { "to": "op-pool", "rel": "becomes" }, { "to": "cap-pool", "rel": "computed in" } ] },
+        { "id": "ts-preference", "title": "Liquidation preference",
+          "text": { "v1": "On a sale or winding up, Series A holders first receive their investment back (1x), and then share in what remains with the ordinary shares, pro rata (participating).",
+                    "v2": "On a sale or winding up, Series A holders receive the greater of their investment back (1x) or what they would receive as ordinary shares (non-participating)." },
+          "change": "Moved from participating to non-participating. On a mid-sized exit this is the clause that moves the most money; the waterfall shows how much.",
+          "caveat": "A 1x non-participating preference is a common position at Series A; participation, multiples above 1x and cumulative dividends each move value from founders to investors on smaller exits.",
+          "links": [ { "to": "art-return-of-capital", "rel": "becomes" }, { "to": "cap-waterfall", "rel": "computed in" } ] },
+        { "id": "ts-anti-dilution", "title": "Anti-dilution",
+          "text": "If the company later issues shares at a lower price, Series A holders are protected on a broad-based weighted average basis, with the usual exceptions such as the option pool.",
+          "caveat": "Broad-based weighted average is the milder form. Full ratchet, which reprices the whole investment to the new lower price, is rare and expensive for founders.",
+          "links": [ { "to": "art-anti-dilution", "rel": "becomes" } ] },
+        { "id": "ts-board", "title": "Board",
+          "text": "A board of four: the two founders, one director appointed by the investors, and one independent director agreed by both.",
+          "caveat": "Control rarely moves through the board count alone; read it with the consent matters, which can matter more.",
+          "links": [ { "to": "sha-board", "rel": "becomes" } ],
+          "argued_in": ["the-exit-is-when-you-sell-control"] },
+        { "id": "ts-consents", "title": "Investor consent matters",
+          "text": "An investor majority must consent before the company issues new shares, changes its business, sells itself, borrows above an agreed limit or adopts its annual budget.",
+          "caveat": "This list is where control actually sits. A long list here can matter more than a board seat.",
+          "links": [ { "to": "sha-consents", "rel": "becomes" } ],
+          "argued_in": ["the-exit-is-when-you-sell-control", "the-controllable-founder"] },
+        { "id": "ts-pre-emption", "title": "Pre-emption",
+          "text": "Existing shareholders may take up new shares before they are offered to anyone else, pro rata to their holdings.",
+          "caveat": "Pre-emption protects against dilution only for holders with money to follow on; angels often cannot.",
+          "links": [ { "to": "art-pre-emption", "rel": "becomes" } ],
+          "argued_in": ["sell-dont-issue"] },
+        { "id": "ts-drag-tag", "title": "Drag-along and tag-along",
+          "text": "If the board, an investor majority and a majority of shareholders approve a sale, everyone must sell on the same terms (drag). If a controlling stake is sold, every holder may sell on the same terms (tag).",
+          "caveat": "Who can trigger the drag decides who can sell the company. Check whose approval it needs.",
+          "links": [ { "to": "art-drag", "rel": "becomes" }, { "to": "art-tag", "rel": "becomes" } ],
+          "argued_in": ["the-exit-is-when-you-sell-control"] },
+        { "id": "ts-vesting", "title": "Founder vesting",
+          "text": { "v1": "Founder shares vest back over four years from completion, with a one-year cliff. Good leaver and bad leaver terms apply.",
+                    "v2": "Founder shares vest back over three years from completion, with 25% treated as vested at completion for time already served and no cliff. Good leaver and bad leaver terms apply." },
+          "change": "The founders had worked on the company for two years before the round. The reply asked for that time to count; the agreed draft credits a quarter of it and drops the cliff.",
+          "caveat": "Reverse vesting on shares the founders already own is the investor's protection against a founder leaving early. The leaver definitions decide what it costs.",
+          "links": [ { "to": "art-leaver", "rel": "becomes" }, { "to": "sha-covenants", "rel": "read with" } ],
+          "argued_in": ["the-controllable-founder"] },
+        { "id": "ts-information", "title": "Information rights",
+          "text": "Monthly management accounts, the annual budget before the year starts, and audited accounts within 120 days of the year end.",
+          "caveat": "Cheap to agree and expensive to keep up without a finance function; this is where a deal room as a vault would carry its weight.",
+          "links": [ { "to": "sha-information", "rel": "becomes" } ] },
+        { "id": "ts-binding", "title": "What is binding",
+          "text": { "v1": "This term sheet is not legally binding, except for confidentiality, eight weeks' exclusivity, and the company paying the investors' legal costs up to £40,000.",
+                    "v2": "This term sheet is not legally binding, except for confidentiality, six weeks' exclusivity, and the company paying the investors' legal costs up to £30,000." },
+          "change": "Exclusivity shortened by two weeks and the cost cap lowered by £10,000.",
+          "caveat": "These are the only clauses with force before the long-form documents are signed. Exclusivity stops the company talking to other investors while the clock runs.",
+          "links": [] }
+      ]
+    },
+    {
+      "id"      : "sha",
+      "title"   : "Subscription and shareholders' agreement",
+      "summary" : "The contract between the company, the founders and the investors: who pays what, what the founders promise, and how the company is run.",
+      "clauses": [
+        { "id": "sha-subscription", "title": "Subscription and completion",
+          "text": "The investors subscribe for the Series A shares at the price per share the valuation sets; the company issues them and updates its register at completion.",
+          "links": [ { "to": "cap-round", "rel": "computed in" }, { "to": "art-share-classes", "rel": "issues shares under" } ] },
+        { "id": "sha-warranties", "title": "Warranties and disclosure",
+          "text": "The company and the founders give warranties about the business, qualified by a disclosure letter. Claims are capped and time-limited.",
+          "caveat": "Not in the term sheet at all, and often where most of the legal time goes. The disclosure letter is the founders' protection: what is disclosed cannot later be claimed for.",
+          "links": [] },
+        { "id": "sha-board", "title": "Board and observers",
+          "text": "Sets the board of four, the investor director's appointment and removal, and an observer seat.",
+          "links": [ { "to": "art-share-classes", "rel": "read with" } ] },
+        { "id": "sha-consents", "title": "Investor consents",
+          "text": "Lists the matters that need investor majority consent, in a schedule.",
+          "links": [ { "to": "art-share-classes", "rel": "read with" } ] },
+        { "id": "sha-covenants", "title": "Founder restrictive covenants",
+          "text": "Founders agree not to compete or solicit staff and customers for a period after they leave.",
+          "caveat": "Courts look at whether such restrictions are reasonable in length and scope; ask what is usual before agreeing.",
+          "links": [] },
+        { "id": "sha-information", "title": "Information",
+          "text": "The reporting the term sheet promised, with the dates and who receives it.",
+          "links": [] }
+      ]
+    },
+    {
+      "id"      : "articles",
+      "title"   : "Articles of association",
+      "summary" : "The company's constitution, filed at Companies House. The rights that attach to each class of share live here, so they bind every future holder.",
+      "clauses": [
+        { "id": "art-share-classes", "title": "Share classes and rights",
+          "text": "Creates the Series A preferred shares and sets the rights of each class: votes, dividends, conversion to ordinary shares.",
+          "links": [ { "to": "art-return-of-capital", "rel": "defines" } ] },
+        { "id": "art-return-of-capital", "title": "Return of capital and exit",
+          "text": "Sets the order in which proceeds are paid out on a sale or winding up: the liquidation preference, written as a waterfall.",
+          "links": [ { "to": "cap-waterfall", "rel": "computed in" } ] },
+        { "id": "art-anti-dilution", "title": "Anti-dilution",
+          "text": "The weighted average formula, and the issues it excludes.",
+          "links": [ { "to": "op-pool", "rel": "excludes" } ] },
+        { "id": "art-pre-emption", "title": "Pre-emption on issue",
+          "text": "Existing holders' right to take up new shares first, and the issues it does not cover.",
+          "links": [ { "to": "op-pool", "rel": "excludes" } ] },
+        { "id": "art-leaver", "title": "Leavers and compulsory transfer",
+          "text": "When a founder leaves, unvested shares must be offered back: at fair value for a good leaver, at the lower of cost and fair value for a bad leaver.",
+          "caveat": "The definition of \"bad leaver\" is the clause to read twice. Some drafts include resignation for any reason.",
+          "links": [] },
+        { "id": "art-drag", "title": "Drag-along",
+          "text": "The approval thresholds that force every holder to sell, and the terms they must be offered.",
+          "links": [] },
+        { "id": "art-tag", "title": "Tag-along",
+          "text": "Any holder may join a sale of a controlling stake on the same terms.",
+          "links": [] }
+      ]
+    },
+    {
+      "id"      : "option-plan",
+      "title"   : "Option scheme rules",
+      "summary" : "How the pool is granted to employees. In the UK, EMI options are often used where the company qualifies.",
+      "clauses": [
+        { "id": "op-pool", "title": "Pool size and grants",
+          "text": "The board may grant options over the shares reserved in the pool, with vesting set per grant.",
+          "caveat": "Whether a company qualifies for EMI depends on conditions set by HMRC; check before promising EMI options to new hires.",
+          "links": [ { "to": "cap-pool", "rel": "computed in" } ] },
+        { "id": "op-leaver", "title": "Leavers",
+          "text": "What happens to vested and unvested options when an employee leaves.",
+          "links": [] }
+      ]
+    },
+    {
+      "id"      : "cap-table",
+      "title"   : "Cap table",
+      "summary" : "Not a contract but what the contracts produce. Computed by the build from the round terms, so each version of the term sheet has its own cap table.",
+      "page"    : "cap-table",
+      "clauses": [
+        { "id": "cap-round", "title": "The round", "text": "Price per share and new shares, computed from the investment and the pre-money valuation.", "links": [] },
+        { "id": "cap-pool", "title": "The pool", "text": "The new pool, sized so that it is the agreed share of the company after completion.", "links": [] },
+        { "id": "cap-waterfall", "title": "The exit waterfall", "text": "Who receives what at a range of exit values, under each version's preference.", "links": [] }
+      ]
+    }
+  ],
+  "arguments": {
+    "a-small-slice-sets-the-price":       "A small slice sets the price: what the 2026 mega-listings sold, and the founder's lesson.",
+    "sell-dont-issue":                    "Sell, don't issue: the investor buys the founder's shares, the founder lends the company what it needs.",
+    "the-exit-is-when-you-sell-control":  "The exit is when you sell control: leave the day someone else is calling the shots, and agree the terms at the start.",
+    "the-controllable-founder":           "The controllable founder: coachability, contracts that move control, and who the commodity is.",
+    "legal-on-demand-for-startups":       "Legal on demand for startups: agent teams do the reading, lawyers sign, with a founder's desk, an investor's desk and a deal room as vaults."
+  }
+}

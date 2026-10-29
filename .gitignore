@@ -167,7 +167,7 @@ venv.bak/
 .ropeproject
 
 # mkdocs/Zensical documentation
-/site
+# /site  (mkdocs output in the template; here site/ is source, so it is not ignored)
 
 # mypy
 .mypy_cache/
@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# investor.sgit.ai
+_site/
+.credentials/

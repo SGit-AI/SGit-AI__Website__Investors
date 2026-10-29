@@ -1,0 +1,21 @@
+<form class="panel" aria-label="Round terms">
+    <div class="fields">
+        <label>Investment (£)<input id="investment" type="number" min="0" step="50000" inputmode="numeric"></label>
+        <label>Pre-money valuation (£)<input id="pre-money" type="number" min="1" step="250000" inputmode="numeric"></label>
+        <label>Option pool after the round (%)<input id="pool-pct" type="number" min="0" max="50" step="0.5" inputmode="decimal"></label>
+        <label>Preference multiple (x)<input id="multiple" type="number" min="0" max="3" step="0.5" inputmode="decimal"></label>
+        <label>Exit value (£)<input id="exit" type="number" min="0" step="1000000" inputmode="numeric"></label>
+    </div>
+    <div class="checks">
+        <label><input id="pool-pre" type="checkbox"> Pool counted in the pre-money valuation</label>
+        <label><input id="participating" type="checkbox"> Participating preference</label>
+    </div>
+</form>
+<p id="summary" class="summary" aria-live="polite"></p>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th scope="col">Holder</th><th scope="col">Shares after</th><th scope="col">%</th><th scope="col">At this exit</th><th scope="col"><span class="sr">Share of the exit</span></th></tr></thead>
+        <tbody></tbody>
+    </table>
+</div>
+<p id="exit-note" class="note" aria-live="polite"></p>

@@ -1,0 +1,99 @@
+# investor.sgit.ai: validate every push; on dev and main, CI picks the version, tags, deploys and checks the live site.
+# CI owns the version: https://newsroom.sgit.ai/articles/ci-owns-the-version.html
+# A push to dev bumps the last number, a push to main the middle one. Nobody else writes the `version` file.
+
+name: site
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Build
+        run: python3 -m admin.build.build_site
+      - name: Gate
+        run: python3 -m admin.gate.site_gate
+      - name: Tests
+        run: python3 -m unittest discover -s tests -t . -v
+
+  release:
+    needs: [validate]
+    if: github.event_name == 'push' && (github.ref_name == 'dev' || github.ref_name == 'main')
+    concurrency: { group: release, cancel-in-progress: false }
+    permissions: { contents: write }
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, ref: "${{ github.ref_name }}" }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Number, build, gate, tag and push
+        id: release
+        env: { BRANCH: "${{ github.ref_name }}" }
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Actions"; git config user.email "actions@github.com"
+          for try in 1 2 3; do
+            git fetch --quiet --tags origin "$BRANCH"
+            git reset -q --hard "origin/$BRANCH"                       # a push that landed meanwhile rides this release
+            LAST=$(git tag --list 'v*' | sort -V | tail -1); LAST=${LAST:-v0.0.0}
+            # guard: the version file only ever holds what CI last wrote
+            if [ "$(cat version)" != "$LAST" ]; then
+              echo "::error::version is $(cat version) but the latest tag is $LAST: the version file was edited by hand"; exit 1; fi
+            IFS=. read -r A B C <<< "${LAST#v}"
+            if [ "$BRANCH" = main ]; then NEW="v$A.$((B + 1)).0"; else NEW="v$A.$B.$((C + 1))"; fi
+            SUBJECT=$(git log -1 --format=%s)
+            printf '%s\n' "$NEW" > version
+            python3 -m admin.build.build_site
+            python3 -m admin.gate.site_gate
+            git add version
+            git commit -q -m "release $NEW: $SUBJECT"
+            git tag "$NEW"
+            if git push origin "HEAD:$BRANCH"; then
+              git push origin "refs/tags/$NEW"
+              echo "version=$NEW" >> "$GITHUB_OUTPUT"
+              echo "released $NEW"
+              break
+            fi
+            git tag -d "$NEW"; echo "$BRANCH moved; taking it in (attempt $try)"
+            [ "$try" = 3 ] && { echo "::error::$BRANCH kept moving; nothing released"; exit 1; }
+          done
+          # rebuild after tagging, so the release history on the site includes this release
+          python3 -m admin.build.build_site
+          if [ "$BRANCH" = main ]; then
+            git push origin "HEAD:dev" || echo "::warning::dev could not be fast-forwarded to $NEW; merge main into dev"
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: _site }
+
+  deploy:
+    needs: [release]
+    permissions: { pages: write, id-token: write }
+    environment: { name: github-pages, url: "${{ steps.deploy.outputs.page_url }}" }
+    runs-on: ubuntu-latest
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+      - name: Verify the live site serves the new version
+        env: { URL: "${{ steps.deploy.outputs.page_url }}", WANT: "${{ needs.release.outputs.version }}" }
+        run: |
+          for i in $(seq 1 30); do
+            GOT=$(curl -fsSL "${URL%/}/version.txt?$i" 2>/dev/null | tr -d '[:space:]' || true)
+            [ "$GOT" = "$WANT" ] && { echo "live: $WANT"; exit 0; }
+            sleep 10
+          done
+          echo "::error::the live site serves '$GOT', not $WANT"; exit 1
