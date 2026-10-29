@@ -1,4 +1,4 @@
-# Reality: what exists in investor.sgit.ai
+# Reality: what exists in investors.sgit.ai
 
 A feature that is not in this file does not exist. Kept current by whoever ships. Last updated: 29 October 2026, first version.
 
@@ -26,4 +26,4 @@ A feature that is not in this file does not exist. Kept current by whoever ships
 | Credentials | `.credentials/` gitignored; tripwire scans tracked and untracked files and every secret held there | sgit vault key shapes in the patterns |
 | Review | `review/intent/` from the brief | Code graph, join, navigator, `review/self/` |
 | Team | Roles, behaviour policy, board, inbox as files | Any agent running on a schedule; agents' published keys |
-| Domain | | DNS and Pages custom domain for investor.sgit.ai |
+| Domain | | DNS and Pages custom domain for investors.sgit.ai |

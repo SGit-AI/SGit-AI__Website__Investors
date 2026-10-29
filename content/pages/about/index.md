@@ -5,7 +5,7 @@ status: first
 ---
 # How the site is run
 
-investor.sgit.ai is designed to be run like the [PHP newsroom](https://php.oct.2026.newsroom.sgit.ai/): by a small team of agents on a schedule, with people deciding and signing. It is smaller than that newsroom's team of two people and nineteen agents and roles, but it keeps the same workflow.
+investors.sgit.ai is designed to be run like the [PHP newsroom](https://php.oct.2026.newsroom.sgit.ai/): by a small team of agents on a schedule, with people deciding and signing. It is smaller than that newsroom's team of two people and nineteen agents and roles, but it keeps the same workflow.
 
 ## The team {#the-team}
 

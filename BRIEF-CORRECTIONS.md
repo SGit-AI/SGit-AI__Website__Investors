@@ -2,9 +2,9 @@
 
 Where the brief was wrong, or where this repository did something other than it says, and why. The brief itself is never edited.
 
-## C-01 · The domain: investor or investors?
+## C-01 · The domain is investors.sgit.ai, not investor.sgit.ai
 
-The brief says **investor.sgit.ai**; the repository's README, written when the repository was created, said investors.sgit.ai. The site uses investor.sgit.ai, as the brief does. No CNAME is committed until the DNS exists (board 003).
+The brief says **investor.sgit.ai**; the repository's README, written when the repository was created, said investors.sgit.ai. On 29 October 2026 the person who commissioned the site confirmed **investors.sgit.ai**. The site, the build and the docs use it; the brief keeps its original wording. No CNAME is committed until the DNS exists (board 003).
 
 ## C-02 · Section 4 built in the first version
 
@@ -29,3 +29,7 @@ The brief asks for the news from investor circles. Who writes the feed is an ope
 ## C-07 · Corrected in our own data before publishing
 
 The first draft of the option pool change note said the smaller pool moved "about 1.5 points" to the existing shareholders. The build computed 2.00 points for the founders alone. The note now points to the computed figure instead of stating one.
+
+## C-08 · The Python .gitignore template hid source folders
+
+The repository's `.gitignore` came from GitHub's Python template, which ignores `build/`, `lib/` and `/site` anywhere in the tree. The first push left out `admin/build/` and `site/lib/`, and CI failed with "No module named admin.build". The template's patterns are now anchored to the root, and a test fails if any source file is ignored.

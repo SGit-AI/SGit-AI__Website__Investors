@@ -90,7 +90,7 @@ class Site_Gate:
                 self.fail('twins', f'{rel}: not listed in llms.txt')
 
     def check_version(self, pages):
-        stamp = f'<meta name="generator" content="investor.sgit.ai {self.version}">'
+        stamp = f'<meta name="generator" content="investors.sgit.ai {self.version}">'
         for rel in pages:
             if stamp not in self.read(rel):
                 self.fail('version', f'{rel}: does not carry version {self.version}')

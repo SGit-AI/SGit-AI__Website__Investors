@@ -1,11 +1,11 @@
 ---
-title: investor.sgit.ai: use the tools, don't read about them
+title: investors.sgit.ai: use the tools, don't read about them
 description: A website for investors and founders, angel to Series A, that runs on the tools it describes. A first version, asking whether it is useful.
 status: first
 ---
 # Use it, don't read about it
 
-**investor.sgit.ai** is a website for investors and founders together, angel to Series A. Most of what the sgit project builds has to be experienced to be understood: a vault the host cannot read, a key an agent can seal a secret to, a contract you can follow clause by clause. So this site is a place to use those things on problems investors and founders actually have.
+**investors.sgit.ai** is a website for investors and founders together, angel to Series A. Most of what the sgit project builds has to be experienced to be understood: a vault the host cannot read, a key an agent can seal a secret to, a contract you can follow clause by clause. So this site is a place to use those things on problems investors and founders actually have.
 
 This is the first version. Some of it runs, much of it is proposed, and every page says which. The question we are asking is simple: [is this useful, and what would help?](/feedback/index.html)
 

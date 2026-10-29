@@ -1,4 +1,4 @@
-# investor.sgit.ai: validate every push; on dev and main, CI picks the version, tags, deploys and checks the live site.
+# investors.sgit.ai: validate every push; on dev and main, CI picks the version, tags, deploys and checks the live site.
 # CI owns the version: https://newsroom.sgit.ai/articles/ci-owns-the-version.html
 # A push to dev bumps the last number, a push to main the middle one. Nobody else writes the `version` file.
 

@@ -16,6 +16,10 @@ This site was built from two documents, published here as they were written and 
 
 The first session started from one line, from the person who commissioned the site: "hi can you read this brief and create the first version of this site?", with a link to the article brief.
 
+## One correction to the brief
+
+The brief names the site investor.sgit.ai. Its name is **investors.sgit.ai**, as decided on 29 October 2026; the brief keeps its original text, and the correction is recorded in the repository's `BRIEF-CORRECTIONS.md`.
+
 ## How this version answers the brief
 
 - **Sections 1 to 3 first,** as the build brief asks: [the news](/news/index.html) as a structure with an empty ledger, [contracts as graphs](/contracts/index.html) with a worked round, and [for founders](/founders/index.html) with [the funding models](/founders/funding-models.html).

@@ -1,4 +1,4 @@
-# Agent Behaviour Policy: investor.sgit.ai
+# Agent Behaviour Policy: investors.sgit.ai
 
 In the shape of RiskMandate's Agent Behaviour Policy (https://riskmandate.ai/abp.html): what each agent can reach, what it is mandated to do, the gap between the two, and the barriers in place. Status: first version, written before any agent runs on a schedule. The footprint of each run is to be read from the workflow logs and compared with this table.
 

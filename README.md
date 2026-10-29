@@ -1,4 +1,4 @@
-# investor.sgit.ai
+# investors.sgit.ai
 
 A website for investors and founders, angel to Series A, where they use the sgit project's tools rather than read about them. Built from [the brief](briefs/2026-10-29__article__investor-sgit-ai.md) and [the build brief](briefs/2026-10-29__build-brief__investor-sgit-ai.md) of 29 October 2026, to sgit.ai's [guidance for every repository](https://sgit.ai/docs/guidance/repositories.md).
 

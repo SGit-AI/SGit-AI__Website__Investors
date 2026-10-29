@@ -92,7 +92,7 @@ class test_Site(unittest.TestCase):
 
     def test_gate_catches_a_wrong_version(self):
         folder = self.copy()
-        self.edit(folder, 'index.html', f'investor.sgit.ai {self.site.version}"', 'investor.sgit.ai v9.9.9"')
+        self.edit(folder, 'index.html', f'investors.sgit.ai {self.site.version}"', 'investors.sgit.ai v9.9.9"')
         self.assertIn('version', [check for check, _ in self.gate(folder).failures])
 
     def test_gate_catches_an_em_dash(self):
@@ -105,3 +105,14 @@ class test_Site(unittest.TestCase):
         with open(os.path.join(folder, 'lib', 'round-maths.js'), 'a') as handle:
             handle.write('\nexport const broken = {\n')
         self.assertIn('scripts', [check for check, _ in self.gate(folder).failures])
+
+
+class test_Repository(unittest.TestCase):
+
+    def test_no_source_file_is_ignored_by_git(self):                          # the Python .gitignore template once hid admin/build/ and site/lib/
+        import subprocess
+        out = subprocess.run(['git', 'ls-files', '--others', '--ignored', '--exclude-standard', '--directory'],
+                             cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
+        sources = ('admin/', 'site/', 'content/', 'team/', 'tests/', 'briefs/', 'review/', '.github/')
+        hidden  = [path for path in out if path.startswith(sources) and '__pycache__' not in path]
+        self.assertEqual(hidden, [])

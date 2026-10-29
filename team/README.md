@@ -1,6 +1,6 @@
 # The team
 
-How investor.sgit.ai is run. A new agent reads this file and one role, then begins.
+How investors.sgit.ai is run. A new agent reads this file and one role, then begins.
 
 - `roles/`: one file per role, with what it does, what it may not do, and the rule behind each.
 - `policies/`: the Agent Behaviour Policy each role runs under, in the shape RiskMandate gives (https://riskmandate.ai/abp.html).
